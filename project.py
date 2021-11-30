@@ -70,20 +70,25 @@ population['Borough'] = population['Borough'].apply(lambda x: x.upper())
 #print(population)
 
 
+plt.figure(figsize=(200, 200))
 cans_vs_litter_by_borough = pd.merge(cans_by_borough,litter_by_borough, how = 'inner', on = 'Borough')
 cans_vs_litter_by_borough = cans_vs_litter_by_borough.rename(columns={"Counts_x": "Bin Count", "Counts_y": "Litter Complaint Count"})
 #print(cans_vs_litter_by_borough)
 cans_vs_litter_by_borough.plot(x="Borough", y=["Bin Count", "Litter Complaint Count"], kind="bar")
+plt.xticks(fontsize=6, rotation=30)
 
+plt.savefig('cans_vs_litter_by_borough.png')
 #plt.show()
 
+plt.figure(figsize=(200, 200))
 population_vs_cans_litter_by_borough =  pd.merge(cans_vs_litter_by_borough,population, how = 'inner', on = 'Borough')
 population_vs_cans_litter_by_borough['People per Bin'] = population_vs_cans_litter_by_borough['Population'] / population_vs_cans_litter_by_borough['Bin Count']
 population_vs_cans_litter_by_borough['People per Complaint'] = population_vs_cans_litter_by_borough['Population'] / population_vs_cans_litter_by_borough['Litter Complaint Count']
 population_vs_cans_litter_by_borough.plot(x="Borough", y=["People per Bin", "People per Complaint"], kind="bar")
 #sns.scatterplot(data = population_vs_cans_litter_by_borough, x="Population", y="People per Complaint", hue="Borough")
 #print(population_vs_cans_litter_by_borough)
-
+plt.xticks(fontsize=6, rotation=30)
+plt.savefig('population_vs_cans_litter_by_borough.png')
 #plt.show()
 
 baskets = pd.read_csv('DSNY_Litter_Basket_Inventory.csv')
