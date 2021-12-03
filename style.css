@@ -13,4 +13,8 @@ body {
 }
 p {
   font-size: 24px;
+  /*text-indent: 50px;*/
+}
+a {
+  color: yellow;
 }

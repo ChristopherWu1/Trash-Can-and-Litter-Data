@@ -8,6 +8,7 @@ import pandasql as psql
 from datetime import datetime, timedelta
 import folium
 from folium.plugins import MarkerCluster
+from folium import FeatureGroup
 import json
 
 
@@ -41,6 +42,26 @@ def cleanLiiterBasket(x):
         return "Litter Basket Request"
     else:
         return x
+
+def cleanLitterCoordinate(x):
+    coord = str(x)
+    coord = coord.replace(",", "")
+    coord = x[1:-1]
+    splitted = coord.split()
+    arr = []
+    count = 0
+    for y in splitted:
+        if count == 0:
+            num = y[:-1]
+            num = float(num)
+            arr.append(num)
+        else:
+            num = y
+            num = float(num)
+            arr.append(num)
+        count += 1
+    return(arr)
+    
     
 #cleans cans data 
 cans = pd.read_csv('DSNY_Litter_Basket_Inventory.csv')
@@ -91,7 +112,7 @@ cans_vs_litter_by_borough.plot(x="Borough", y=["Bin Count", "Litter Complaint Co
 plt.xticks(fontsize=6, rotation=30)
 plt.title("Amount of Trash Cans and Litter Complaints by Borough")
 plt.savefig('cans_vs_litter_by_borough.png')
-#plt.show()
+plt.show()
 
 
 #make population vs complaint and cans chart
@@ -105,7 +126,7 @@ population_vs_cans_litter_by_borough.plot(x="Borough", y=["People per Bin", "Peo
 plt.xticks(fontsize=6, rotation=30)
 plt.title("People per Trash Cans and Litter Complaints by Borough")
 plt.savefig('population_vs_cans_litter_by_borough.png')
-#plt.show()
+plt.show()
 
 #compare complaint types
 litter_complaints = pd.read_csv('311_Service_Requests_from_2010_to_Present.csv')
@@ -125,7 +146,7 @@ plt.xticks(fontsize=6, rotation=0)
 plt.title("Types of Complaints")
 plt.bar_label(splot.containers[0])
 plt.savefig('Types_of_Complaints.png')
-#plt.show()
+plt.show()
 
 
 
@@ -164,12 +185,12 @@ columns=['SECTION',"COUNT"],
 key_on="feature.properties.section",
 fill_color='YlGn',
 fill_opacity=1,
-line_opacity=0.2,
+line_opacity= 1.0,
 legend_name="Bin Count",
 smooth_factor=0,
 Highlight= True,
 line_color = "#0000",
-name = "Trash and Bin Data",
+name = "BIn count by District",
 show=False,
 overlay=True,
 nan_fill_color = "White"
@@ -182,8 +203,28 @@ print(baskets['Coordinate'][0],baskets['BASKETID'][0])
 for x,y in zip(baskets['Coordinate'], baskets['BASKETID']):
     folium.Marker(location = x , popup = y, icon=folium.Icon(color="blue", icon='trash', prefix = 'fa')).add_to(marker_cluster)
     
-folium.LayerControl().add_to(map_2)
+
 #df = baskets.merge(districts, on = 'SECTION')
 
-outfp = "layer_map.html"
+complaints2 = pd.read_csv('311_Service_Requests_from_2010_to_Present.csv')
+complaints2 = complaints2.dropna(subset=['Location'])#went from 39164 to 36701, dropped 2463 rows
+complaints2 = complaints2.reset_index(drop=True)
+complaints2['Complaint Type'] = complaints2['Complaint Type'].apply(lambda x: cleanLiiterBasket(x))
+print(complaints2['Location'][0])
+complaints2['Location'] = complaints2['Location'].apply(lambda x: cleanLitterCoordinate(x))
+complaints2.drop(complaints2.loc[complaints2['Complaint Type']== 'Litter Basket Complaint'].index, inplace=True)#went from 36701 to 36234, dropped 467 rows
+complaints2 = complaints2.reset_index(drop=True)
+print(complaints2['Location'][0])
+print(complaints2['Complaint Type'])
+
+
+marker_cluster2 = MarkerCluster().add_to(map_2)
+for x,y in zip(complaints2['Location'], complaints2['Complaint Type']):
+    if y == 'Litter Basket Request':
+        folium.Marker(location = x , popup = y, icon=folium.Icon(color="red", icon='trash', prefix = 'fa')).add_to(marker_cluster2)
+    elif y == 'Overflowing Litter Baskets':
+        folium.Marker(location = x , popup = y, icon=folium.Icon(color="orange", icon='trash', prefix = 'fa')).add_to(marker_cluster2)
+      
+folium.LayerControl().add_to(map_2)
+outfp = "layers.html"
 map_2.save(outfp)
