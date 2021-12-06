@@ -15,7 +15,7 @@
              One solution would be to add more trash cans throughout the city where litter complaints are high.</p>
         <br />
         <br />
-        <img src="Types_of_Complaints.png" alt="Bar graph that compares the different amounts of complaints" width="960" height="720">   
+        <img src="images/Types_of_Complaints.png" alt="Bar graph that compares the different amounts of complaints" width="960" height="720">   
         <p>
             Residents of New York City can call 311 to report any complaint they have. The city then uploads these 311 complaints to openNYC, where anyone can access the data for free. 
             I filtered out the data to only include complaints about litter. I then counted the number of times a certain complaint type appears and put the data into a bar graph. 
@@ -25,13 +25,17 @@
         <p>
             The second complaint that appears the most is an existing litter bin overflowing from trash. The collection of trash from these bins are done by the Department of Sanitation, or the DSNY. 
             Cleaning out the bins are not prioritized by the DSNY, so the trash piles up in the bins. Overflowing bins also contributes to the litter problem, as the wind and animals carry the trash away from the bin
-            and onto the streets.
+            and onto the streets. People are also less likely to throw their trash into the bins if they see it full and they are more likely litter on the streets.
+        </p>
+        <p>
+            The third complaint is a general litter basket complaint, described by the DSNY as a basket being used for household or commercial waste. I decided not to include it in my data as it 
+            has no relation to litter.
         </p>
         <br />
         <br />   
-        <img src="cans_vs_litter_by_borough.png" alt="Bar graph that compares the amount of cans to amount of litter reports by borough" width="960" height="720">
+        <img src="images/cans_vs_litter_by_borough.png" alt="Bar graph that compares the amount of cans to amount of litter reports by borough" width="960" height="720">
         <p>
-            The first graph shows the total amount of trash cans and litter complaints group by the five boroughs. 
+            This graph shows the total amount of trash cans and litter complaints group by the five boroughs. 
             Four of the boroughs have the amount of complaints exceed the amount of trash cans : Bronx, Brooklyn, Queens, and Staten Island.  In some boroughs, there are more than 2 complaints to every bin. 
             Only Manhattan has a higher bin count than complaints. They also have the most amounts of bins in the city. This brings up some interesting questions about the need of the bins. Are the amount of bins in Manhattan required since the amount of complaints are low?
             Is the low amount of complaints because of the high amounts of bins?
@@ -39,7 +43,7 @@
         </p>
         <br />
         <br />
-        <img src="population_vs_cans_litter_by_borough.png" alt="Bar graph that compares the amount of cans to the population by borough" width="960" height="720">
+        <img src="images/population_vs_cans_litter_by_borough.png" alt="Bar graph that compares the amount of cans to the population by borough" width="960" height="720">
         <p>
             I also decided to compared the population of each borough to the amount of litter bins and complaints in each borough. It is a better representative of the data since boroughs 
             like Brooklyn and Queens have a higher population than the rest of the boroughs, so they are going to have more complaints. Looking at the map, all the boroughs except Manhattan has a high
@@ -50,14 +54,34 @@
         </p>
         <br />
         <br />
-        <iframe src = 'layers.html' width="960" height="720" > </iframe>
+        <iframe src = 'maps/layers.html' width="960" height="720" > </iframe>
 
         <p>
             This interactive map has three different layers to it. The first layer being the amount of bins in each DSNY district. The department of sanitation breaks the city into 7 operating zones and further breaks those zones into districts.
-            I then mapped out how many bins are in each district throughout the city with a color gradient. The darker green means it has the most amount of bins and the light yellow districts have the least amount of bins. 
+            I then mapped out how many bins are in each district throughout the city with a color gradient. The darker green means it has the most amount of bins and the light yellow districts have the least amount of bins. In the zones with a small amount of bins, there are ma lot of requests for new bins. However,
+            in many places where there is currently a bin, that area has a history of repeating requests for a bin in the past and the city putting a trash bin there. Some of the bins are there because of the feedback given by residents. 
+            
+        </p>
+        <p>
+            Some bins are going through a cycle of the city neglecting them and the bins overflowing, then the city removes the bin because they cannot properly maintain them, and the residents of the neighborhood complain that the bin is missing.
+            Take the image below as an example. Located at the intersection of 95'th street and 37'th avenue in Jackson Heights, Queens. This one intersection has had 24 complaints, most of it coming between 2018 and 2019.
+        </p>
+        <iframe src = 'maps/small.html' width="960" height="720" > </iframe>
+        <p>
+            The first complaint came in 2010, asking for a litter basket at this location. There was only one more complaint in 2014, an overflowing complaint,so that means the city did put a trash can there. Starting in 2018 is where the main bulk of the complaints at this location
+            came from. It first started on September 15'th, 2018, where a resident sent a overflowing basket complaint. The next complaint happened a month later, a new basket request. The city must have decided that the bin was too hard to maintain, so they removed it. This then lead to
+            more complaints for a new trash can and the city putting the bin back. But, the city cannot properly maintain this bin, so it is always overflowing and there are always complaints. The city then solves the problem by removing the bin and the cycle continues. This cycle has happened for two years, until late 2019.
+            I should also note that this location looks inefficient to have a trash can, as there is a couple of them one block to the east and one block to the west. The location is also right off the main road, so it will take more effect by the DSNY to empty out the trash can. I think the best thing to do is still have the trash can there, but have the bin be emptied more often. 
+            There are many cans on a line going from east to west and would be an easy cleanup for the DSNY. 
+        </p>
+        <h3> <u> Conclusion  </u></h3>
+        <p>
+            I believe that adding litter baskets is only part of the solution. The city and the Department of Sanitation needs to collect and empty out the trash before the litter baskets are overflowing. People litter because of the inconvenience of trying to find a place to properly throw out their trash, not because
+            of malicious intent. Recently, the city hired workers to pick up trash on the street as a solution to the litter problem, but that is not a preventative solution. The best way is to encourage people to
+            properly dispose of their garbage by having more trash bins.
         </p>
         <footer>
-            <a href="layers.html" target = _blank >Interactive Map</a>
+            <a href="aboutThis.html">Information About This Project</a>
         </footer>
     </body>
 
