@@ -18,3 +18,7 @@ p {
 a {
   color: yellow;
 }
+ul {
+  display: table;
+  margin: 0 auto;
+}

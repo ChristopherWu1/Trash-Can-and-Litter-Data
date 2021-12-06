@@ -216,15 +216,32 @@ complaints2.drop(complaints2.loc[complaints2['Complaint Type']== 'Litter Basket 
 complaints2 = complaints2.reset_index(drop=True)
 print(complaints2['Location'][0])
 print(complaints2['Complaint Type'])
+print('check 123')
+#print( complaints2.loc[complaints2['Latitude'] == 40.7510630753346])
+#print(type(complaints2['Latitude'][3235]))
 
 
 marker_cluster2 = MarkerCluster().add_to(map_2)
-for x,y in zip(complaints2['Location'], complaints2['Complaint Type']):
+for w,x,y,z in zip(complaints2['Unique Key'],complaints2['Location'], complaints2['Complaint Type'],complaints2['Created Date']):
     if y == 'Litter Basket Request':
-        folium.Marker(location = x , popup = y, icon=folium.Icon(color="red", icon='trash', prefix = 'fa')).add_to(marker_cluster2)
+        folium.Marker(location = x , popup = [w,x,y,z], icon=folium.Icon(color="red", icon='trash', prefix = 'fa')).add_to(marker_cluster2)
     elif y == 'Overflowing Litter Baskets':
-        folium.Marker(location = x , popup = y, icon=folium.Icon(color="orange", icon='trash', prefix = 'fa')).add_to(marker_cluster2)
+        folium.Marker(location = x , popup = [w,x,y,z], icon=folium.Icon(color="orange", icon='trash', prefix = 'fa')).add_to(marker_cluster2)
       
 folium.LayerControl().add_to(map_2)
 outfp = "layers.html"
 map_2.save(outfp)
+
+
+map_3 = folium.Map(location=[40.75106307533461, -73.87223730184984],tiles = 'OpenStreetMap', zoom_start=25, control_scale=True)
+marker_cluster3 = MarkerCluster().add_to(map_3)
+for w,x,y,z in zip(complaints2['Unique Key'],complaints2['Location'], complaints2['Complaint Type'],complaints2['Created Date']):
+    if y == 'Litter Basket Request':
+        folium.Marker(location = x , popup = [w,x,y,z], icon=folium.Icon(color="red", icon='trash', prefix = 'fa')).add_to(marker_cluster3)
+    elif y == 'Overflowing Litter Baskets':
+        folium.Marker(location = x , popup = [w,x,y,z], icon=folium.Icon(color="orange", icon='trash', prefix = 'fa')).add_to(marker_cluster3)
+
+outfp = "small.html"
+map_3.save(outfp)
+
+
