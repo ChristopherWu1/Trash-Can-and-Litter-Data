@@ -13,6 +13,8 @@ body {
 }
 p {
   font-size: 24px;
+  margin-left: 50px;
+  margin-right: 50px;
   /*text-indent: 50px;*/
 }
 a {
@@ -21,4 +23,19 @@ a {
 ul {
   display: table;
   margin: 0 auto;
+}
+
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("images/litter.jpg");
+
+  /* Set a specific height */
+  height: 50%;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }

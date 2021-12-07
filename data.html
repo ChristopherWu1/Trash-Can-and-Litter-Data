@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset = "UTF-8">
+        <meta name = "home" content ="homepage of project">
+        <title> Data</title>
+
+    </head>
+
+    <body>
+        <h3><u>List of Data sources</u></h3>
+        <ul>
+            <li> <a href="https://data.cityofnewyork.us/City-Government/NYC-Population-by-Borough/h2bk-zmw6" target = _blank> NYC Population by Borough</a> </ul>
+            <li><a href="https://data.cityofnewyork.us/dataset/DSNY-Litter-Basket-Inventory/8znf-7b2c" target = _blank> DSNY Litter Basket Inventory</a></ul>
+            <li><a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9" target = _blank> 311 Service Requests from 2010 to Present</a></ul>
+            <li><a href="https://esri-nyc-office.hub.arcgis.com/datasets/0d14638c1df3494285c152c0764dfa2e_0/about" target = _blank> DSNY Sections GeoJSON</a></ul>
+           
+        </ul>
+        <h3><u>Explanation of Data</u></h3>
+        <p>
+            <u>NYC Population by Borough</u>: a simple dataset that lists all five boroughs, Manhattan, Queens, Brooklyn, Bronx, and Staten Island, and the population of each borough. 
+            Data is based on New York City Population By Neighborhood Tabulation Areas.
+        </p>
+        <p>
+            <u>DSNY Litter Basket Inventory</u>: Locations of litter baskets tracked by DSNY. Main parts I used are the points, the coordinates of the basket, and the DSNY sections.
+        </p>
+        <p>
+            <u>311 Service Requests from 2010 to Present</u>: All 311 Service Requests from 2010 to present. 311 is a service that residents of New York CIty can call to lodge a complaint they have. There are a lot of different complaints, but I focused on ones about litter.
+        </p>
+        <p>
+            <u>DSNY Sections GeoJSON</u>: A GeoJSON file that broke the DSNY sections into polygrams that are easily mappable onto a folium map. Each district has a section property that is the key to map the data onto it.
+        </p>
+
+
+        <h3> <u>Data Manipulation and Cleanup </u></h3>
+        <p>
+            Before even downloading the data, I had to filter the 311 complaints because the sheer amount of data was too much. I only downloaded the rows that had 'litter' in them and discarded the rest. That still left me with over 39,000 complaints. 
+            
+        </p>
+        <p>
+            To clean up the datasets for the graphs, I had to create columns to join the datasets together. In the litter basket inventory csv, it did not list the borough it came from, but it did list the DSNY section. 
+            That section code included an abbreviated version of the borough it is located, so I made a function that took the section and returned the borough. I did this to make it easier to join the different datasets together.
+        </p>
+        <p>
+            I also had to clean the complaint types for the 311 complaints. For a litter basket request, the city had two different options listed: 'Litter Basket / Request' and 'Litter Basket Request'. 
+            I made a function that turned  'Litter Basket / Request' into 'Litter Basket Request'.
+        </p>
+        <p>
+            The complaints table already had the borough listed, but I had to drop the rows that had 'Litter Basket Complaint' as its complaint type because it did not relate to my project too much. 
+            I did include it in the different types of complaints charts because I felt it was important to show all the types of litter complaints.
+        </p>
+        <p>
+            All of the graphs are bar charts that showed the counts of different values that appear in the dataset and the amount of total rows group by boroughs. After joining the datasets, I renamed columns to make it easier to understand for the reader and outputted onto a bar graph.
+            For the bar graphs, some of the borough's names were too long, so I tilted it at a 30 degree angle instead of making it vertical.
+        </p>
+        <p>
+            
+        </p>
+
+        <footer>
+            <a href="index.html">Back to Project</a>
+        </footer>
+    </body>
