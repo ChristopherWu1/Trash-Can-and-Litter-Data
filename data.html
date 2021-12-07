@@ -51,10 +51,13 @@
         </p>
         <p>
             All of the graphs are bar charts that showed the counts of different values that appear in the dataset and the amount of total rows group by boroughs. After joining the datasets, I renamed columns to make it easier to understand for the reader and outputted onto a bar graph.
+            I used the seaborn library to make these graphs.
             For the bar graphs, some of the borough's names were too long, so I tilted it at a 30 degree angle instead of making it vertical.
         </p>
         <p>
-            
+            For the interactive maps, I used folium and some of its libraries. I saw that having all the points at once would be too much for one map and it would slow down the website. Folium has the ability to have layers fpr different pieces of information, 
+            and I took advantage of that to separate the bin location and the complaints location. Having all the points be displayed at once would also slow down the website, so I utilized a folium property called
+            MarkerCluster that groups points that are close together into a cluster. 
         </p>
 
         <footer>
