@@ -1,3 +1,22 @@
+'''
+Name:  Christopher Wu
+Email: Christopher.Wu03@myhunter.cuny.edu
+
+Resources: 
+Population by Borough: https://data.cityofnewyork.us/City-Government/NYC-Population-by-Borough/h2bk-zmw6
+Litter Basket Inventory: https://data.cityofnewyork.us/dataset/DSNY-Litter-Basket-Inventory/8znf-7b2c
+311 service requests: https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9
+DSNY Sections GeoJSON:  https://esri-nyc-office.hub.arcgis.com/datasets/0d14638c1df3494285c152c0764dfa2e_0/about
+Other litter solutions made by the city: https://patch.com/new-york/new-york-city/nyc-launches-city-cleanup-corps-will-hire-10k-workers
+
+for folium maps, specifically choropleth: https://towardsdatascience.com/how-to-step-up-your-folium-choropleth-map-skills-17cf6de7c6fe
+for layer control: https://autogis-site.readthedocs.io/en/latest/notebooks/L5/02_interactive-map-folium.html
+-a lot of stack overflow threads 
+-W3schools.com for html help
+
+URL: https://christopherwu1.github.io/Trash-Can-and-Litter-Data/
+'''
+
 import pandas as pd
 import numpy as np
 import codecs
@@ -10,8 +29,6 @@ import folium
 from folium.plugins import MarkerCluster
 from folium import FeatureGroup
 import json
-
-
 
 
 
@@ -65,8 +82,8 @@ def cleanLitterCoordinate(x):
     return(arr)
     
     
-#cleans cans data 
-cans = pd.read_csv('DSNY_Litter_Basket_Inventory.csv')
+#cleans litter basket location data for merge
+cans = pd.read_csv('data/DSNY_Litter_Basket_Inventory.csv')
 cans['Borough'] = cans['SECTION'].apply(lambda x: cleanBoroughs(x))
 #print(cans['borough'][:20])
 
@@ -78,9 +95,8 @@ cans_by_borough =  cans_by_borough.sort_values(by=['Counts'], ascending=False)
 
 
 
-
 #make 311 data and gets population per can and complaint chart
-litter_complaints2 = pd.read_csv('311_Service_Requests_from_2010_to_Present.csv')
+litter_complaints2 = pd.read_csv('data/311_Service_Requests_from_2010_to_Present.csv')
 litter_complaints2.drop(litter_complaints2.loc[litter_complaints2['Complaint Type']== 'Litter Basket Complaint'].index, inplace=True)
 '''
 print(litter_complaints2[:20])
@@ -90,7 +106,7 @@ litter_by_borough = litter_complaints2.groupby('Borough').size().reset_index(nam
 litter_by_borough = litter_by_borough.sort_values(by=['Counts'], ascending=False)
 #print(litter_by_borough)
 
-population = pd.read_csv('NYC_Population_by_Borough.csv')
+population = pd.read_csv('data/NYC_Population_by_Borough.csv')
 population['Borough'] = population['Borough'].apply(lambda x: x.upper())
 #print(population)
 
@@ -119,7 +135,7 @@ plt.savefig('population_vs_cans_litter_by_borough.png')
 plt.show()
 
 #compare complaint types
-litter_complaints = pd.read_csv('311_Service_Requests_from_2010_to_Present.csv')
+litter_complaints = pd.read_csv('data/311_Service_Requests_from_2010_to_Present.csv')
 litter_complaints['Complaint Type'] = litter_complaints['Complaint Type'].apply(lambda x: cleanLiiterBasket(x))
 #print(litter_complaints['Complaint Type'].unique())
 complaint_type = litter_complaints['Complaint Type'].value_counts()
@@ -134,12 +150,13 @@ plt.savefig('Types_of_Complaints.png')
 plt.show()
 
 
-'''
-#make folium maps 
-baskets = pd.read_csv('DSNY_Litter_Basket_Inventory.csv')
-baskets['Coordinate'] = baskets['point'].apply(lambda x: cleanCoordinates(x))
-m = folium.Map(location=[40.768731, -73.964915],tiles = 'OpenStreetMap', zoom_start=11, control_scale=True)
 
+#make folium maps 
+baskets = pd.read_csv('data/DSNY_Litter_Basket_Inventory.csv')
+baskets['Coordinate'] = baskets['point'].apply(lambda x: cleanCoordinates(x))
+
+'''
+m = folium.Map(location=[40.768731, -73.964915],tiles = 'OpenStreetMap', zoom_start=11, control_scale=True)
 marker_cluster = MarkerCluster().add_to(m)
 #print(baskets['Coordinate'][0],baskets['BASKETID'][0])
 for x,y in zip(baskets['Coordinate'], baskets['BASKETID']):
@@ -147,13 +164,12 @@ for x,y in zip(baskets['Coordinate'], baskets['BASKETID']):
 #folium.Marker(location = [40.768731, -73.964915], popup = "Hunter College").add_to(m)
 outfp = "base_map.html"
 m.save(outfp)
-
 '''
 
 #make foliumwith 3 layers: section of DSNY with basket totals, location of bins, location and type of complaints
 map_2 = folium.Map(location=[40.768731, -73.964915],tiles = 'OpenStreetMap', zoom_start=11, control_scale=True)
-districts = pd.read_csv('DSNY_Sections.csv')
-baskets2 = pd.read_csv('DSNY_Litter_Basket_Inventory.csv')
+districts = pd.read_csv('data/DSNY_Sections.csv')
+baskets2 = pd.read_csv('data/DSNY_Litter_Basket_Inventory.csv')
 L = baskets2['SECTION'].value_counts()
 df = L .to_frame().reset_index()
 df.rename({'SECTION': 'COUNT', 'index': 'SECTION'}, axis=1, inplace=True)
@@ -191,7 +207,7 @@ for x,y in zip(baskets['Coordinate'], baskets['BASKETID']):
 
 
 #clean complaint data and mapped it
-complaints2 = pd.read_csv('311_Service_Requests_from_2010_to_Present.csv')
+complaints2 = pd.read_csv('data/311_Service_Requests_from_2010_to_Present.csv')
 complaints2 = complaints2.dropna(subset=['Location'])#went from 39164 to 36701, dropped 2463 rows
 complaints2 = complaints2.reset_index(drop=True)
 complaints2['Complaint Type'] = complaints2['Complaint Type'].apply(lambda x: cleanLiiterBasket(x))
@@ -217,6 +233,10 @@ map_2.save(outfp)
 #second folium map, in-depth look one intersection and the complaints
 map_3 = folium.Map(location=[40.75106307533461, -73.87223730184984],tiles = 'OpenStreetMap', zoom_start=25, control_scale=True)
 marker_cluster3 = MarkerCluster().add_to(map_3)
+
+for x,y in zip(baskets['Coordinate'], baskets['BASKETID']):
+    folium.Marker(location = x , popup = y, icon=folium.Icon(color="blue", icon='trash', prefix = 'fa')).add_to(marker_cluster3)
+
 for w,x,y,z in zip(complaints2['Unique Key'],complaints2['Location'], complaints2['Complaint Type'],complaints2['Created Date']):
     if y == 'Litter Basket Request':
         folium.Marker(location = x , popup = [w,x,y,z], icon=folium.Icon(color="red", icon='trash', prefix = 'fa')).add_to(marker_cluster3)
