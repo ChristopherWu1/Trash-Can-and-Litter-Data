@@ -1,14 +1,13 @@
 '''
 Name:  Christopher Wu
 Email: Christopher.Wu03@myhunter.cuny.edu
+Title: The Effects of Trash Cans on Litter in New York City
 
-Resources: 
-Population by Borough: https://data.cityofnewyork.us/City-Government/NYC-Population-by-Borough/h2bk-zmw6
+Resources: Population by Borough: https://data.cityofnewyork.us/City-Government/NYC-Population-by-Borough/h2bk-zmw6
 Litter Basket Inventory: https://data.cityofnewyork.us/dataset/DSNY-Litter-Basket-Inventory/8znf-7b2c
 311 service requests: https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9
 DSNY Sections GeoJSON:  https://esri-nyc-office.hub.arcgis.com/datasets/0d14638c1df3494285c152c0764dfa2e_0/about
 Other litter solutions made by the city: https://patch.com/new-york/new-york-city/nyc-launches-city-cleanup-corps-will-hire-10k-workers
-
 for folium maps, specifically choropleth: https://towardsdatascience.com/how-to-step-up-your-folium-choropleth-map-skills-17cf6de7c6fe
 for layer control: https://autogis-site.readthedocs.io/en/latest/notebooks/L5/02_interactive-map-folium.html
 -a lot of stack overflow threads 
